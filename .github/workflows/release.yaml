@@ -52,10 +52,9 @@ jobs:
 
       - name: Create GitHub release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.RELEASE_PAT }}
         run: |
           gh release create "${GITHUB_REF_NAME}" release/*.zip \
-          --title "Release ${GITHUB_REF_NAME}" \
-          --notes "Version ${GITHUB_REF_NAME}" \
-          --repo "${{ github.repository }}" \
-          --token "$RELEASE_PAT"
+            --title "Release ${GITHUB_REF_NAME}" \
+            --notes "Version ${GITHUB_REF_NAME}" \
+            --repo "${{ github.repository }}"
