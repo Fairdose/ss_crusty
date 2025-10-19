@@ -42,16 +42,15 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          
-          git clone https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }} rust-doc-temp
-          cd rust-doc-temp
-          git fetch origin rust-doc
-          git checkout rust-doc
-          
+
+          git clone https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }} rust-docs-temp
+          cd rust-docs-temp
+          git checkout -B rust-docs
+
           rm -rf *
           cp -r ../target/doc/* .
           echo "ss_crusty.fairdose.net" > CNAME
-          
+
           git add --all
           git commit -m "Update Rust docs for $GITHUB_SHA" || echo "No changes to commit"
-          git push origin rust-doc
+          git push origin rust-docs
