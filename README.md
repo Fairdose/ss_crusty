@@ -2,6 +2,8 @@
 
 A fast, **multithreaded and concurrent** web scraping utility built in **Rust** for fetching raw HTML content and extracting all absolute links from a list of URLs. It's designed for simple, high-speed data collection and outputs clean JSON. 
 
+Future features might include a full distributed crawling framework, dynamic JavaScript rendering, and a personalized pizza delivery bot.
+
 --Made out of boredom--
 
 ---

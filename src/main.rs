@@ -7,14 +7,25 @@
 //! 3.  **Data Extraction:** Employs the [`reqwest`](https://docs.rs/reqwest/latest/reqwest/) HTTP client and the [`scraper`](https://docs.rs/scraper/latest/scraper/) parsing library to robustly fetch and analyze web pages.
 //! 4.  **Structured Output:** Gathers all results (original URL, raw HTML, and unique extracted links) and serializes them into a single, clean **JSON file** using [`serde`](https://docs.rs/serde/latest/serde/).
 //!
-//! ### Usage:
+//! ---
+//!
+//! #### Arguments:
+//!
+//! * **`--urls <URL>`**: URLs to fetch. **Must be repeated** for each URL to be added (e.g., `--urls "url1" --urls "url2"`).
+//! * **`--file <PATH>`**: Path to one or more files containing URLs. **Must be repeated** for each file (e.g., `--file "list1.txt" --file "list2.txt"`).
+//! * **`--output <PATH>`**: The output JSON file name (defaults to `results.json`).
+//! * **`--user-agent <AGENT:String>`**: Optional user-agent string override (`Mozilla`, `Webkit`, or `Chrome`).
+//! * **`-v / --verbose`**: Controls logging level (`-v` = Info, `-vv` = Debug, `-vvv` = Trace).
+//!
+//! ---
+//!
+//! #### Usage:
 //!
 //! Run the application with URLs and specify the output file:
 //!
 //! ```bash
-//! ss_crusty --urls "https://example.com" --file "list.txt" --output "results.json" -vv
+//! ss_crusty --urls "[https://example.com](https://example.com)" --file "list.txt" --output "results.json" -vv
 //! ```
-
 mod cli;
 mod scrape;
 mod io;

@@ -1,3 +1,11 @@
+//! **cli.rs** handles all user interaction via the command line and configures the HTTP environment ⚙️.
+//!
+//! ### Responsibilities:
+//!
+//! * **Argument Parsing:** Defines the command-line interface using the `clap` crate, including options for input (`--urls`, `--file`), output (`--output`), and logging control (`--verbose`).
+//! * **User Agent Management:** Provides a choice of common User Agents (`Mozilla`, `Webkit`, `Chrome`) to allow users to customize requests and potentially avoid being blocked by target websites.
+//! * **Client Initialization:** Builds and returns a thread-safe, blocking `reqwest` HTTP client (`Arc<Client>`), pre-configured with the chosen User Agent, ready for concurrent use by the scraping routines.
+
 use clap::{Parser, ValueEnum};
 use reqwest::blocking::Client;
 use std::sync::Arc;

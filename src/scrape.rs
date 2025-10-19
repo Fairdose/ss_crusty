@@ -2,8 +2,8 @@
 //!
 //! ### Key Functions:
 //!
-//! * **`fetch_html`:** Performs a blocking HTTP GET request using the [**`reqwest`**](https://docs.rs/rayon/latest/rayon/) client to retrieve the raw HTML content of a URL. It includes error handling to gracefully capture network failures and timeout issues, returning a fallback string if the fetch fails.
-//! * **`extract_links`:** Parses the fetched HTML using the `scraper` library's DOM manipulation. It specifically targets `<a>` elements and filters the `href` attributes to collect only **unique, absolute links** (those starting with `http://` or `https://`).
+//! * **`fetch_html`:** Performs a blocking HTTP GET request using the [**`reqwest`**](https://docs.rs/reqwest/latest/reqwest/) client to retrieve the raw HTML content of a URL. It includes error handling to gracefully capture network failures and timeout issues, returning a fallback string if the fetch fails.
+//! * **`extract_links`:** Parses the fetched HTML using the [`scraper`](https://docs.rs/scraper/latest/scraper/) library's DOM manipulation. It specifically targets `<a>` elements and filters the `href` attributes to collect only **unique, absolute links** (those starting with `http://` or `https://`).
 //! * **`fetch_and_extract`:** A utility that wraps the fetching and extraction process into a single, cohesive step for use in the parallel processing loop.
 
 use reqwest::blocking::Client;
