@@ -2,7 +2,7 @@ use clap::{Parser, ValueEnum};
 use reqwest::blocking::Client;
 use std::sync::Arc;
 
-/// Supported User Agents for HTTP requests
+/// Supported User Agents for HTTP requests, allowing the user to disguise or specify the client making the request.
 #[derive(ValueEnum, Clone, Debug)]
 pub enum UserAgent {
     Mozilla,
@@ -10,7 +10,9 @@ pub enum UserAgent {
     Chrome,
 }
 
-/// Command-line arguments
+/// Command-line arguments for the ss_crusty application.
+///
+/// This structure defines all the configurable inputs the user can provide to control the scraping process.
 #[derive(Parser, Debug)]
 #[command(
     author,

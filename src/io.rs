@@ -1,7 +1,9 @@
 use std::fs::File;
 use std::io::{self, Read, Write};
 
-/// Reads the entire content of a file into a string
+/// Reads the entire content of a file into a string.
+///
+/// This is used primarily for loading files that contain lists of URLs.
 ///
 /// # Examples
 ///
@@ -16,7 +18,9 @@ pub fn read_file(path: &str) -> io::Result<String> {
     Ok(content)
 }
 
-/// Writes a string to a file, creating or truncating it
+/// Writes a string to a file, creating or truncating it.
+///
+/// This is used to output the final, serialized JSON results.
 ///
 /// # Examples
 ///

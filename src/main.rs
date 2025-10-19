@@ -1,3 +1,20 @@
+//! ss_crusty (Simple Scraper) is a high-performance, command-line application written in **Rust** 🦀 designed to **fetch HTML content from a list of URLs in parallel and extract all absolute links**.
+//!
+//! ### Core Functionality:
+//!
+//! 1.  **Input Versatility:** Accepts target URLs both directly via command-line arguments and from external files.
+//! 2.  **Concurrency (Multi-threading):** Utilizes the **[`rayon`](https://docs.rs/rayon/latest/rayon/)** library for **parallel execution** (`par_iter().map(...)`), enabling the application to fetch and scrape multiple URLs concurrently across available CPU cores, ensuring fast and efficient processing of large lists.
+//! 3.  **Data Extraction:** Employs the [`reqwest`](https://docs.rs/reqwest/latest/reqwest/) HTTP client and the [`scraper`](https://docs.rs/scraper/latest/scraper/) parsing library to robustly fetch and analyze web pages.
+//! 4.  **Structured Output:** Gathers all results (original URL, raw HTML, and unique extracted links) and serializes them into a single, clean **JSON file** using [`serde`](https://docs.rs/serde/latest/serde/).
+//!
+//! ### Usage:
+//!
+//! Run the application with URLs and specify the output file:
+//!
+//! ```bash
+//! ss_crusty --urls "https://example.com" --file "list.txt" --output "results.json" -vv
+//! ```
+
 mod cli;
 mod scrape;
 mod io;
@@ -8,9 +25,14 @@ use serde::Serialize;
 use log::{info, debug};
 
 #[derive(Serialize)]
+/// Represents the result of scraping a single URL.
+/// This structure is used by the application to serialize the final data into the output JSON file.
 struct PageResult {
+    /// The URL that was fetched.
     url: String,
+    /// A list of all unique, absolute links extracted from the page's HTML.
     links: Vec<String>,
+    /// The raw HTML content of the page.
     html: String,
 }
 

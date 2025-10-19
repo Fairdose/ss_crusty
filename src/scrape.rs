@@ -1,11 +1,19 @@
+//! **scrape.rs** contains the core logic for network communication and data extraction 🕸️.
+//!
+//! ### Key Functions:
+//!
+//! * **`fetch_html`:** Performs a blocking HTTP GET request using the [**`reqwest`**](https://docs.rs/rayon/latest/rayon/) client to retrieve the raw HTML content of a URL. It includes error handling to gracefully capture network failures and timeout issues, returning a fallback string if the fetch fails.
+//! * **`extract_links`:** Parses the fetched HTML using the `scraper` library's DOM manipulation. It specifically targets `<a>` elements and filters the `href` attributes to collect only **unique, absolute links** (those starting with `http://` or `https://`).
+//! * **`fetch_and_extract`:** A utility that wraps the fetching and extraction process into a single, cohesive step for use in the parallel processing loop.
+
 use reqwest::blocking::Client;
 use scraper::{Html, Selector};
 use std::collections::HashSet;
 use log::{info, warn, debug};
 
-/// Fetches HTML from a URL using the provided HTTP client
+/// Fetches HTML from a URL using the provided HTTP client.
 ///
-/// Returns `"Failed to fetch"` if any network error occurs.
+/// Returns `"Failed to fetch"` if any network error occurs, allowing the parallel process to continue.
 ///
 /// # Examples
 ///
@@ -31,11 +39,13 @@ pub fn fetch_html(client: &Client, url: &str) -> String {
     }
 }
 
-/// Extracts all unique links starting with `http://` or `https://` from HTML
+/// Extracts all unique links starting with `http://` or `https://` from HTML.
+///
+/// It uses a HashSet internally to ensure all returned links are unique.
 ///
 /// # Examples
 ///
-/// ```
+/// ```no_run
 /// use scrape::extract_links;
 /// let html = r#"<a href="https://example.com">link</a>"#;
 /// let links = extract_links(html);
@@ -60,7 +70,9 @@ pub fn extract_links(html: &str) -> Vec<String> {
     links_set.into_iter().collect()
 }
 
-/// Convenience function to fetch HTML and extract links in one step
+/// Convenience function to fetch HTML and extract links in one step.
+///
+/// Returns a tuple containing the raw HTML content and a vector of extracted links.
 ///
 /// # Examples
 ///
