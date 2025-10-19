@@ -16,8 +16,6 @@ jobs:
     strategy:
       matrix:
         target: [x86_64-unknown-linux-gnu, x86_64-pc-windows-gnu]
-    outputs:
-      release-artifacts: ${{ steps.upload-artifacts.outputs.artifacts }}
     steps:
       - uses: actions/checkout@v4
 
@@ -32,6 +30,22 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y gcc-mingw-w64 zip
 
       - run: rustup target add ${{ matrix.target }}
+
+      - name: Cache Cargo registry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: cargo-registry-
+
+      - name: Cache Cargo build
+        uses: actions/cache@v4
+        with:
+          path: target
+          key: cargo-build-${{ runner.os }}-${{ matrix.target }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: cargo-build-${{ runner.os }}-${{ matrix.target }}-
 
       - run: cargo build --release --target ${{ matrix.target }}
 
@@ -60,13 +74,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
+      - name: Download Linux artifact
+        uses: actions/download-artifact@v4
         with:
           name: x86_64-unknown-linux-gnu-zip
           path: release
+
       - name: Download Windows artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: x86_64-pc-windows-gnu-zip
           path: release
