@@ -1,10 +1,11 @@
-name: Build and Publish Docs
+name: Build and Publish Rust Docs
 
 on:
   workflow_dispatch:
 
 jobs:
   build-and-deploy:
+    if: github.actor == '@Fairdose'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,10 +31,10 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Build docs
+      - name: Build Rust docs
         run: cargo doc --no-deps
 
-      - name: Install gh CLI
+      - name: Install GitHub CLI
         run: sudo apt update && sudo apt install -y gh
 
       - name: Publish docs
@@ -46,11 +47,13 @@ jobs:
           git clone https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }} rust-docs-temp
           cd rust-docs-temp
           git checkout -B rust-docs
-
+          
           rm -rf *
-          cp -r ../target/doc/* .
-          echo "ss_crusty.fairdose.net" > CNAME
+          
+          cp -r ../target/doc/ss_crusty/* .
+          
+          echo "ss-crusty.fairdose.net" > CNAME
 
           git add --all
           git commit -m "Update Rust docs for $GITHUB_SHA" || echo "No changes to commit"
-          git push origin rust-docs
+          git push --force origin rust-docs
