@@ -34,7 +34,7 @@ jobs:
       - name: Inject html_root_url attribute
         run: |
           VERSION=$(grep '^version' Cargo.toml | head -1 | cut -d '"' -f2)
-          DOC_URL="https://ss-crusty.fairdose.net/v${VERSION}"
+          DOC_URL="https://ss-crusty.fairdose.net"
           echo "Injecting html_root_url = ${DOC_URL}"
           
           if [ -f src/main.rs ]; then
