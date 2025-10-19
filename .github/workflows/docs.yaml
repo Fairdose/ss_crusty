@@ -44,7 +44,7 @@ jobs:
           fi
 
       - name: Build Rust docs
-        run: cargo doc --no-deps --base-url "https://ss-crusty.fairdose.net/"
+        run: cargo doc --no-deps
 
       - name: Install GitHub CLI
         run: sudo apt update && sudo apt install -y gh
