@@ -1,8 +1,16 @@
+//! **cli.rs** handles all user interaction via the command line and configures the HTTP environment ⚙️.
+//!
+//! ### Responsibilities:
+//!
+//! * **Argument Parsing:** Defines the command-line interface using the `clap` crate, including options for input (`--urls`, `--file`), output (`--output`), and logging control (`--verbose`).
+//! * **User Agent Management:** Provides a choice of common User Agents (`Mozilla`, `Webkit`, `Chrome`) to allow users to customize requests and potentially avoid being blocked by target websites.
+//! * **Client Initialization:** Builds and returns a thread-safe, blocking `reqwest` HTTP client (`Arc<Client>`), pre-configured with the chosen User Agent, ready for concurrent use by the scraping routines.
+
 use clap::{Parser, ValueEnum};
 use reqwest::blocking::Client;
 use std::sync::Arc;
 
-/// Supported User Agents for HTTP requests
+/// Supported User Agents for HTTP requests, allowing the user to disguise or specify the client making the request.
 #[derive(ValueEnum, Clone, Debug)]
 pub enum UserAgent {
     Mozilla,
@@ -10,7 +18,9 @@ pub enum UserAgent {
     Chrome,
 }
 
-/// Command-line arguments
+/// Command-line arguments for the ss_crusty application.
+///
+/// This structure defines all the configurable inputs the user can provide to control the scraping process.
 #[derive(Parser, Debug)]
 #[command(
     author,

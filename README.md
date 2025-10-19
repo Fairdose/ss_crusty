@@ -1,8 +1,25 @@
 # SS_Crusty 🕸🦀🕸 (Simple Scraper, Crusty Rust Edition)
 
-A fast, **multithreaded and concurrent** web scraping utility built in **Rust** for fetching raw HTML content and extracting all absolute links from a list of URLs. It's designed for simple, high-speed data collection and outputs clean JSON. 
+A fast, **multithreaded and concurrent** web scraping utility built in **Rust** for fetching raw HTML content and extracting all absolute links from a list of URLs. It's designed for simple, high-speed data collection and outputs clean JSON.
 
 --Made out of boredom--
+
+## 🛣️ Development Roadmap
+Future features might include a full distributed crawling framework, dynamic JavaScript rendering, and a personalized pizza delivery bot.
+
+Seriously though...
+
+### Immediate Plans (Next Releases)
+
+* Configuration Files: Support for managing inputs/settings via Json, yaml or [Something Completely Different](https://www.imdb.com/title/tt0066765/).
+* `robots.txt` Respect: Respect: Automatic adherence to website exclusion rules.
+* Targeted Data Extraction: Allow extraction of specific data using CSS selectors.
+
+### Later Plans
+
+* Structured Data Output: Output results in defined, structured formats (schemas).
+* Anti-Bot Defenses: Implement rate limiting and proxy support for OpSec tooling.
+* Session Management: Add cookie and header control for authenticated scraping.
 
 ---
 

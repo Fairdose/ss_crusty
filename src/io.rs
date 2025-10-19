@@ -1,7 +1,16 @@
+//! **io.rs** provides basic utilities for file system interaction 💾.
+//!
+//! ### File Handling:
+//!
+//! * **`read_file`:** Reads an entire file's content into a `String`. This is primarily used to load lists of URLs from user-specified input files.
+//! * **`write_file`:** Writes a given string content to a specified file path. This function is used to persist the final, serialized JSON output to disk.
+
 use std::fs::File;
 use std::io::{self, Read, Write};
 
-/// Reads the entire content of a file into a string
+/// Reads the entire content of a file into a string.
+///
+/// This is used primarily for loading files that contain lists of URLs.
 ///
 /// # Examples
 ///
@@ -16,7 +25,9 @@ pub fn read_file(path: &str) -> io::Result<String> {
     Ok(content)
 }
 
-/// Writes a string to a file, creating or truncating it
+/// Writes a string to a file, creating or truncating it.
+///
+/// This is used to output the final, serialized JSON results.
 ///
 /// # Examples
 ///
