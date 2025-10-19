@@ -32,16 +32,6 @@ jobs:
 
       - run: rustup target add ${{ matrix.target }}
 
-      - name: Update Cargo.toml version
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.release != '' }}
-        run: |
-          sed -i "s/^version = \".*\"/version = \"${{ github.event.inputs.release }}\"/" Cargo.toml
-          git add Cargo.toml
-          git commit -m "Bump version to ${{ github.event.inputs.release }}"
-          git tag "v${{ github.event.inputs.release }}"
-          git push origin HEAD
-          git push origin "v${{ github.event.inputs.release }}"
-
       - run: cargo build --release --target ${{ matrix.target }}
 
       - run: |
