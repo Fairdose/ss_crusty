@@ -12,6 +12,7 @@ on:
 
 jobs:
   build:
+    if: github.actor == '@Fairdose'
     runs-on: ubuntu-latest
     strategy:
       matrix:
