@@ -31,7 +31,8 @@ The user of this software is entirely responsible for adhering to all applicable
 
 ## 🛠️ Installation
 
-You can either **download a pre-built binary** from the [Releases page](https://github.com/Fairdose/ss_crusty/releases) (recommended) or build the executable yourself using the Rust toolchain.
+You can either **download a pre-built binary** for Windows and Linux from the [Releases page](https://github.com/Fairdose/ss_crusty/releases).
+For MacOS see below.
 
 ### Building from Source
 

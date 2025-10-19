@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target: [x86_64-unknown-linux-gnu, x86_64-pc-windows-gnu, x86_64-apple-darwin]
+        target: [x86_64-unknown-linux-gnu, x86_64-pc-windows-gnu]
 
     steps:
       - name: Checkout repository
@@ -24,13 +24,12 @@ jobs:
           override: true
           components: rustfmt, clippy
 
-      - name: Add targets for cross compilation
-        run: |
-          case ${{ matrix.target }} in
-            x86_64-pc-windows-gnu) rustup target add x86_64-pc-windows-gnu ;;
-            x86_64-apple-darwin) rustup target add x86_64-apple-darwin ;;
-            x86_64-unknown-linux-gnu) echo "Linux target, no extra setup" ;;
-          esac
+      - name: Install dependencies for Windows target
+        if: matrix.target == 'x86_64-pc-windows-gnu'
+        run: sudo apt-get update && sudo apt-get install -y gcc-mingw-w64
+
+      - name: Add Rust target
+        run: rustup target add ${{ matrix.target }}
 
       - name: Build release
         run: cargo build --release --target ${{ matrix.target }}
@@ -38,30 +37,21 @@ jobs:
       - name: Prepare ZIP
         run: |
           mkdir -p release
-          case ${{ matrix.target }} in
-            x86_64-unknown-linux-gnu)
-              EXE_NAME=ss_crusty
-              ZIP_NAME=ss_crusty-linux-x86_64.zip
-              ;;
-            x86_64-pc-windows-gnu)
-              EXE_NAME=ss_crusty.exe
-              ZIP_NAME=ss_crusty-windows-x86_64.zip
-              ;;
-            x86_64-apple-darwin)
-              EXE_NAME=ss_crusty
-              ZIP_NAME=ss_crusty-macos-x86_64.zip
-              ;;
-          esac
+          if [[ "${{ matrix.target }}" == "x86_64-unknown-linux-gnu" ]]; then
+            EXE_NAME=ss_crusty
+            ZIP_NAME=ss_crusty-linux-x86_64.zip
+          else
+            EXE_NAME=ss_crusty.exe
+            ZIP_NAME=ss_crusty-windows-x86_64.zip
+          fi
           cp target/${{ matrix.target }}/release/$EXE_NAME release/
           cp README.md release/
-          cd release
-          zip -r $ZIP_NAME ./*
-          cd ..
-          echo "ZIP created: release/$ZIP_NAME"
+          zip -r release/$ZIP_NAME release/*
 
       - name: Upload release asset
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.ref_name }}
           files: release/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
