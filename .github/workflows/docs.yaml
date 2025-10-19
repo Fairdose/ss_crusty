@@ -5,7 +5,7 @@ on:
 
 jobs:
   build-and-deploy:
-    if: github.actor == '@Fairdose'
+    if: github.actor == 'Fairdose'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
