@@ -31,17 +31,6 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Inject html_root_url attribute
-        run: |
-          DOC_URL="https://ss-crusty.fairdose.net"
-          echo "Injecting html_root_url = ${DOC_URL}"
-
-          if [ -f src/main.rs ]; then
-            sed -i "1i #![doc(html_root_url = \\\"${DOC_URL}\\\")]" src/main.rs
-          else
-            echo "src/main.rs not found (skipping injection)"
-          fi
-
       - name: Build Rust docs
         run: cargo doc --no-deps
 
@@ -60,10 +49,11 @@ jobs:
           git checkout -B rust-docs
           
           rm -rf *
-          cp -r ../target/doc/ss_crusty/* .
+          cp -r ../target/doc/* .
+          echo '<meta http-equiv="refresh" content="0;url=ss_crusty/index.html">' > index.html          
           echo "" > .nojekyll
           echo "ss-crusty.fairdose.net" > CNAME
-
+          
           git add --all
           git commit -m "Update Rust docs for $GITHUB_SHA" || echo "No changes to commit"
           git push --force origin rust-docs
