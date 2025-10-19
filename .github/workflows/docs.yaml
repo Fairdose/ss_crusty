@@ -5,7 +5,6 @@ on:
 
 jobs:
   build-and-deploy:
-    if: github.actor == '@Fairdose'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,10 +33,20 @@ jobs:
       - name: Build docs
         run: cargo doc --no-deps
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v6
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: target/doc
-          publish_branch: rust-doc
-          cname: ss_crusty.fairdose.net
+      - name: Install gh CLI
+        run: sudo apt update && sudo apt install -y gh
+
+      - name: Publish docs
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PAT }}
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git clone --branch rust-doc https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }} rust-doc-temp
+          rm -rf rust-doc-temp/*
+          cp -r target/doc/* rust-doc-temp/
+          echo "ss_crusty.fairdose.net" > rust-doc-temp/CNAME
+          cd rust-doc-temp
+          git add --all
+          git commit -m "Update Rust docs for $GITHUB_SHA" || echo "No changes to commit"
+          git push origin rust-doc
