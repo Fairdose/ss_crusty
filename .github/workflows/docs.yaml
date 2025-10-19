@@ -32,7 +32,7 @@ jobs:
           override: true
 
       - name: Build Rust docs
-        run: cargo doc --no-deps
+        run: cargo doc --no-deps --base-url "https://ss-crusty.fairdose.net/"
 
       - name: Install GitHub CLI
         run: sudo apt update && sudo apt install -y gh
