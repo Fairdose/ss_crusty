@@ -16,7 +16,8 @@ jobs:
     strategy:
       matrix:
         target: [x86_64-unknown-linux-gnu, x86_64-pc-windows-gnu]
-
+    outputs:
+      release-artifacts: ${{ steps.upload-artifacts.outputs.artifacts }}
     steps:
       - uses: actions/checkout@v4
 
@@ -46,6 +47,29 @@ jobs:
           cp target/${{ matrix.target }}/release/$EXE_NAME release/
           cp README.md release/
           zip -r release/$ZIP_NAME release/*
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.target }}-zip
+          path: release/*.zip
+
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: x86_64-unknown-linux-gnu-zip
+          path: release
+      - name: Download Windows artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: x86_64-pc-windows-gnu-zip
+          path: release
 
       - name: Install GitHub CLI
         run: sudo apt update && sudo apt install -y gh
