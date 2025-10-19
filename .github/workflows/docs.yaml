@@ -49,9 +49,8 @@ jobs:
           git checkout -B rust-docs
           
           rm -rf *
-          
           cp -r ../target/doc/ss_crusty/* .
-          
+          echo "" > .nojekyll
           echo "ss-crusty.fairdose.net" > CNAME
 
           git add --all
