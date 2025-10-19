@@ -1,72 +1,44 @@
-use std::fs;
-use std::sync::{Arc, Mutex, mpsc};
+mod cli;
+mod scrape;
+mod io;
+
+use cli::parse_args_and_client;
 use rayon::prelude::*;
-use parsers::{json_parser, txt_parser, xml_parser, csv_parser};
-use std::thread;
+use serde::Serialize;
 
-fn parse_file_content(path_or_url: &str, content: &str) -> Vec<String> {
-    if path_or_url.ends_with(".json") {
-        json_parser::parse_json(content)
-    } else if path_or_url.ends_with(".txt") {
-        txt_parser::parse_txt(content)
-    } else if path_or_url.ends_with(".xml") {
-        xml_parser::parse_xml(content)
-    } else if path_or_url.ends_with(".csv") {
-        csv_parser::parse_csv(content)
-    } else {
-        vec![]
-    }
+#[derive(Serialize)]
+struct PageResult {
+    url: String,
+    links: Vec<String>,
+    html: String,
 }
 
-fn read_content(path_or_url: &str) -> String {
-    if path_or_url.starts_with("http://") || path_or_url.starts_with("https://") {
-        reqwest::blocking::get(path_or_url)
-            .map(|resp| resp.text().unwrap_or_default())
-            .unwrap_or_default()
-    } else {
-        fs::read_to_string(path_or_url).unwrap_or_default()
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let (args, client) = parse_args_and_client()?;
+
+    let mut urls = args.urls.clone();
+    if let Some(file_path) = &args.file {
+        let content = io::read_file(file_path)?;
+        urls.extend(parsers::parser_json(&content)); // extend with your chosen parser
     }
-}
+    urls.sort();
+    urls.dedup();
 
-fn main() {
-    let paths_or_urls = vec![
-        "data.json",
-        "data.txt",
-        "data.xml",
-        "data.csv",
-    ];
-
-    let results: Arc<Mutex<Vec<String>>> = Arc::new(Mutex::new(Vec::new()));
-    let (tx, rx) = mpsc::channel();
-
-    for path_or_url in paths_or_urls {
-        let tx = tx.clone();
-        let results = Arc::clone(&results);
-        let path_or_url = path_or_url.to_string();
-
-        thread::spawn(move || {
-            let content = read_content(&path_or_url);
-            let urls = parse_file_content(&path_or_url, &content);
-
-            {
-                let mut res = results.lock().unwrap();
-                res.extend(urls.clone());
+    let results: Vec<PageResult> = urls
+        .par_iter()
+        .map(|url| {
+            let (html, links) = scrape::fetch_and_extract(&client, url);
+            PageResult {
+                url: url.to_string(),
+                links,
+                html,
             }
+        })
+        .collect();
 
-            tx.send(format!("Processed {}", path_or_url)).unwrap();
-        });
-    }
+    let wrapped = serde_json::json!({ "pages": results });
+    io::write_file(&args.output, &serde_json::to_string_pretty(&wrapped)?)?;
+    println!("Results written to {}", args.output);
 
-    drop(tx);
-
-    for msg in rx {
-        println!("{}", msg);
-    }
-
-    let final_urls = Arc::clone(&results);
-    final_urls.lock().unwrap().par_iter().for_each(|url| {
-        println!("Found URL: {}", url);
-    });
-
-    println!("All URLs processed. Total: {}", results.lock().unwrap().len());
+    Ok(())
 }

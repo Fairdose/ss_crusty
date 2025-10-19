@@ -1,0 +1,41 @@
+# Makefile for ss_crusty Rust project
+
+# Default target: build and run
+all: build
+
+# Build the project
+build:
+	cargo build --release
+
+# Run the project (adjust input/output as needed)
+run:
+	cargo run --release -- --input urls.json --output results.json --format json
+
+# Check the project (compile-time checks without producing binary)
+check:
+	cargo check
+
+# Run tests
+test:
+	cargo test
+
+# Format code according to Rust style guidelines
+fmt:
+	cargo fmt
+
+# Lint code (catch warnings, clippy style)
+lint:
+	cargo clippy --all-targets --all-features -- -D warnings
+
+# Clean build artifacts
+clean:
+	cargo clean
+
+# Install dependencies (Cargo automatically handles this, but explicit target)
+deps:
+	cargo fetch
+
+# Convenience target: build + run
+build-run: build run
+
+.PHONY: all build run check test fmt lint clean deps build-run
