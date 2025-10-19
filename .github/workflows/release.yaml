@@ -1,0 +1,66 @@
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - 'v*.*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [x86_64-unknown-linux-gnu, x86_64-pc-windows-gnu, x86_64-apple-darwin]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          components: rustfmt, clippy
+
+      - name: Add targets for cross compilation
+        run: |
+          case ${{ matrix.target }} in
+            x86_64-pc-windows-gnu) rustup target add x86_64-pc-windows-gnu ;;
+            x86_64-apple-darwin) rustup target add x86_64-apple-darwin ;;
+            x86_64-unknown-linux-gnu) echo "Linux target, no extra setup" ;;
+          esac
+
+      - name: Build release
+        run: cargo build --release --target ${{ matrix.target }}
+
+      - name: Prepare ZIP
+        run: |
+          mkdir -p release
+          case ${{ matrix.target }} in
+            x86_64-unknown-linux-gnu)
+              EXE_NAME=ss_crusty
+              ZIP_NAME=ss_crusty-linux-x86_64.zip
+              ;;
+            x86_64-pc-windows-gnu)
+              EXE_NAME=ss_crusty.exe
+              ZIP_NAME=ss_crusty-windows-x86_64.zip
+              ;;
+            x86_64-apple-darwin)
+              EXE_NAME=ss_crusty
+              ZIP_NAME=ss_crusty-macos-x86_64.zip
+              ;;
+          esac
+          cp target/${{ matrix.target }}/release/$EXE_NAME release/
+          cp README.md release/
+          cd release
+          zip -r $ZIP_NAME ./*
+          cd ..
+          echo "ZIP created: release/$ZIP_NAME"
+
+      - name: Upload release asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: release/*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

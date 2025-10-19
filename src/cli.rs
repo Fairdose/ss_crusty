@@ -12,15 +12,19 @@ pub enum UserAgent {
 
 /// Command-line arguments
 #[derive(Parser, Debug)]
-#[command(author, version, about)]
+#[command(
+    author,
+    version,
+    about = "Fetch URLs and extract links\nVerbose usage: -v = Info, -vv = Debug, -vvv = Trace"
+)]
 pub struct Args {
-    /// URLs to fetch (can pass multiple `--urls`)
+    /// URLs to fetch (can pass multiple `--urls "https://example1.com" --urls "https://example2.com"`)
     #[arg(long, action = clap::ArgAction::Append)]
     pub urls: Vec<String>,
 
-    /// Path to a file containing URLs
-    #[arg(long)]
-    pub file: Option<String>,
+    /// Path to one or more files containing URLs (can pass multiple `--file "file1.txt" --file "file2.json"`)
+    #[arg(long, action = clap::ArgAction::Append)]
+    pub file: Vec<String>,
 
     /// Output JSON file
     #[arg(long, default_value = "results.json")]
@@ -29,6 +33,10 @@ pub struct Args {
     /// Optional user-agent
     #[arg(long, value_enum)]
     pub user_agent: Option<UserAgent>,
+
+    /// Enable verbose logging (-v = Info, -vv = Debug, -vvv = Trace)
+    #[arg(short, action = clap::ArgAction::Count)]
+    pub verbose: u8,
 }
 
 /// Converts a `UserAgent` enum into an HTTP User-Agent string
@@ -66,6 +74,7 @@ pub fn get_user_agent_string(ua: Option<&UserAgent>) -> &str {
 /// ```
 pub fn parse_args_and_client() -> Result<(Args, Arc<Client>), Box<dyn std::error::Error>> {
     let args = Args::parse();
+
     let client = Arc::new(
         Client::builder()
             .user_agent(get_user_agent_string(args.user_agent.as_ref()))

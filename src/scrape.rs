@@ -1,6 +1,7 @@
 use reqwest::blocking::Client;
 use scraper::{Html, Selector};
 use std::collections::HashSet;
+use log::{info, warn, debug};
 
 /// Fetches HTML from a URL using the provided HTTP client
 ///
@@ -16,11 +17,18 @@ use std::collections::HashSet;
 /// assert!(html.len() > 0);
 /// ```
 pub fn fetch_html(client: &Client, url: &str) -> String {
-    client
-        .get(url)
-        .send()
-        .and_then(|resp| resp.text())
-        .unwrap_or_else(|_| "Failed to fetch".to_string())
+    info!("Fetching: {}", url);
+
+    match client.get(url).send().and_then(|resp| resp.text()) {
+        Ok(html) => {
+            debug!("Successfully fetched {} ({} bytes)", url, html.len());
+            html
+        }
+        Err(e) => {
+            warn!("Failed to fetch {}: {}", url, e);
+            "Failed to fetch".to_string()
+        }
+    }
 }
 
 /// Extracts all unique links starting with `http://` or `https://` from HTML
@@ -34,6 +42,7 @@ pub fn fetch_html(client: &Client, url: &str) -> String {
 /// assert_eq!(links, vec!["https://example.com"]);
 /// ```
 pub fn extract_links(html: &str) -> Vec<String> {
+    debug!("Extracting links from HTML...");
     let document = Html::parse_document(html);
     let selector = Selector::parse("a").unwrap();
     let mut links_set = HashSet::new();
@@ -46,6 +55,8 @@ pub fn extract_links(html: &str) -> Vec<String> {
         }
     }
 
+    let count = links_set.len();
+    debug!("Extracted {} unique links", count);
     links_set.into_iter().collect()
 }
 
@@ -62,7 +73,11 @@ pub fn extract_links(html: &str) -> Vec<String> {
 /// assert!(links.len() >= 0);
 /// ```
 pub fn fetch_and_extract(client: &Client, url: &str) -> (String, Vec<String>) {
+    info!("Processing: {}", url);
+
     let html = fetch_html(client, url);
     let links = extract_links(&html);
+
+    info!("{} -> {} links extracted", url, links.len());
     (html, links)
 }

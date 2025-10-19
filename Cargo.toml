@@ -11,3 +11,5 @@ clap = { version = "4.5.49", features = ["derive"] }
 serde = { version = "1.0.228", features = ["derive"] }
 scraper = "0.24.0"
 rayon = "1.11.0"
+log = "0.4"
+env_logger = "0.11"
