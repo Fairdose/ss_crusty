@@ -1,0 +1,29 @@
+# Rust build output
+/target/
+
+# Cargo
+**/Cargo.lock
+
+# IDEs
+.idea/
+*.vscode/
+
+# Editor & OS temp files
+*.rs.bk
+*.swp
+*.log
+*.tmp
+*.DS_Store
+Thumbs.db
+
+# Temporary files
+*.bak
+*.old
+*.orig
+*.rej
+
+# Compiled binaries
+*.exe
+*.dll
+*.so
+*.dylib
