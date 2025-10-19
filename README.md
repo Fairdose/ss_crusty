@@ -91,12 +91,14 @@ Scrape two different pages and set the User-Agent to mimic Chrome.
 
 Process URLs found in both `batch1.json` and `batch2.json`, and save the combined results.
 
+`batch1.json`
 ```json
-// batch1.json
-{ "urls": ["https://example.com/page1", "https://example.com/page2"] }
+  { "urls": ["https://example.com/page1", "https://example.com/page2"] 
+```
 
-// batch2.json
-{ "urls": ["https://example.com/a", "https://example.com/b"] }
+`batch2.json`
+```json
+  { "urls": ["https://example.com/a", "https://example.com/b"] }
 ```
 
 You can process them using the multiple `--file` flag:
@@ -122,11 +124,13 @@ Example results.json:
       "links": [
         "[https://www.iana.org/domains/example](https://www.iana.org/domains/example)",
         "[https://another-absolute-link.com/page](https://another-absolute-link.com/page)" 
-        // ... more links
+        "...more links"
       ],
-      "html": "<!doctype html>\n<html>\n<head>...</head></html>" // full HTML content
+      "html": "<!doctype html>\n<html>\n<head>...</head></html> <----HTML Content"
     },
-    // ... more PageResult objects
+    {
+      "... more Page Results Content"
+    }
   ]
 }
 ```
