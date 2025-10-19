@@ -56,4 +56,4 @@ jobs:
 
           git add --all
           git commit -m "Update Rust docs for $GITHUB_SHA" || echo "No changes to commit"
-          git push origin rust-docs
+          git push --force origin rust-docs
