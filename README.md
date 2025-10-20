@@ -11,6 +11,7 @@ Seriously though...
 
 ### Immediate Plans (Next Releases)
 
+* Heavy load detection: Using **[`rayon`](https://docs.rs/rayon/latest/rayon/)** only on heavy loads.
 * Configuration Files: Support for managing inputs/settings via Json, yaml or [Something Completely Different](https://www.imdb.com/title/tt0066765/).
 * `robots.txt` Respect: Respect: Automatic adherence to website exclusion rules.
 * Targeted Data Extraction: Allow extraction of specific data using CSS selectors.
