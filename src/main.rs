@@ -15,7 +15,7 @@
 //! * **`--file <PATH>`**: Path to one or more files containing URLs. **Must be repeated** for each file (e.g., `--file "list1.txt" --file "list2.txt"`).
 //! * **`--output <PATH>`**: The output JSON file name (defaults to `results.json`).
 //! * **`--user-agent <AGENT:String>`**: Optional user-agent string override (`Mozilla`, `Webkit`, or `Chrome`).
-//! * **`-v / --verbose`**: Controls logging level (`-v` = Info, `-vv` = Debug, `-vvv` = Trace).
+//! * **`-v, -vv, -vvv`**: Controls logging level (`-v` = Info, `-vv` = Debug, `-vvv` = Warn).
 //!
 //! ---
 //!
@@ -24,7 +24,7 @@
 //! Run the application with URLs and specify the output file:
 //!
 //! ```bash
-//! ss_crusty --urls "[https://example.com](https://example.com)" --file "list.txt" --output "results.json" -vv
+//! ss_crusty --urls "https://example.com" --file "list.txt" --output "results.json" -vv
 //! ```
 mod cli;
 mod scrape;

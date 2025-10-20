@@ -25,7 +25,7 @@ Seriously though...
 
 ## ✨ Features
 
-* **High-Speed Concurrency:** Uses the **`rayon`** crate for **multithreaded, parallel** processing of multiple URLs, significantly improving scraping speed.
+* **High-Speed Concurrency:** Uses the **[`rayon`](https://docs.rs/rayon/latest/rayon/)** crate for **multithreaded, parallel** processing of multiple URLs, significantly improving scraping speed.
 * **Versatile Input:** Supports loading URLs from four different file formats: **JSON, CSV, XML, and TXT**.
 * **Simple Output:** Results are saved to a **pretty-printed JSON file** containing the full HTML and a list of all extracted absolute links for each URL.
 * **Flexible Input:** Provide target URLs directly via command-line arguments (`--urls`) or load them from one or **multiple files** (`--file`).
@@ -58,7 +58,7 @@ This project requires the **Rust toolchain**. If you don't have it, you can inst
 1.  **Clone the repository:**
     ```bash
     git clone https://github.com/Fairdose/ss_crusty.git
-    cd rust-web-scraper
+    cd ss_crusty
     ```
 2.  **Build the project:**
     ```bash
@@ -111,7 +111,7 @@ Process URLs found in both `batch1.json` and `batch2.json`, and save the combine
 
 `batch1.json`
 ```json
-  { "urls": ["https://example.com/page1", "https://example.com/page2"] 
+  { "urls": ["https://example.com/page1", "https://example.com/page2"] } 
 ```
 
 `batch2.json`
@@ -134,20 +134,20 @@ The output is a single JSON object containing a pages array, where each element 
 
 Example results.json:
 
-```json
+```
 {
   "pages": [
     {
-      "url": "[https://example.com](https://example.com)",
+      "url": "https://example.com",
       "links": [
-        "[https://www.iana.org/domains/example](https://www.iana.org/domains/example)",
-        "[https://another-absolute-link.com/page](https://another-absolute-link.com/page)" 
+        "https://www.iana.org/domains/example",
+        "https://another-absolute-link.com/page",
         "...more links"
       ],
-      "html": "<!doctype html>\n<html>\n<head>...</head></html> <----HTML Content"
+      "html": "<!doctype html>\n<html>\n<head>...</head></html>" <--- HTML Content
     },
     {
-      "... more Page Results Content"
+      ...more page results
     }
   ]
 }
@@ -155,7 +155,7 @@ Example results.json:
 
 ### 📂 Input File Formats
 
-The scraper automatically attempts to parse the file content based on common conventions for the following four supported formats. Do not worry about duplications 😉
+The scraper automatically attempts to parse the file content based on common conventions for the following four supported formats. Do not worry about duplications. In the back ss_crusty uses HashSets for url iterations.
 
 #### 1. JSON Format
 
@@ -188,7 +188,6 @@ Files must contain one URL per line.
 
 **File Content Example (`input.txt`):**
 ```
-url
 https://example1.com
 https://example2.com
 ```
