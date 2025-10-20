@@ -1,6 +1,6 @@
 //! ss_crusty (Simple Scraper) is a high-performance, command-line application written in **Rust** 🦀 designed to **fetch HTML content from a list of URLs in parallel and extract all absolute links**.
 //!
-//! ### Core Functionality:
+//! ### Core Functionality
 //!
 //! 1.  **Input Versatility:** Accepts target URLs both directly via command-line arguments and from external files.
 //! 2.  **Concurrency (Multi-threading):** Utilizes the **[`rayon`](https://docs.rs/rayon/latest/rayon/)** library for **parallel execution** (`par_iter().map(...)`), enabling the application to fetch and scrape multiple URLs concurrently across available CPU cores, ensuring fast and efficient processing of large lists.
@@ -9,7 +9,7 @@
 //!
 //! ---
 //!
-//! #### Arguments:
+//! #### Arguments
 //!
 //! * **`--urls <URL>`**: URLs to fetch. **Must be repeated** for each URL to be added (e.g., `--urls "url1" --urls "url2"`).
 //! * **`--file <PATH>`**: Path to one or more files containing URLs. **Must be repeated** for each file (e.g., `--file "list1.txt" --file "list2.txt"`).
@@ -19,7 +19,7 @@
 //!
 //! ---
 //!
-//! #### Usage:
+//! #### Usage
 //!
 //! Run the application with URLs and specify the output file:
 //!
