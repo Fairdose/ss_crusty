@@ -18,6 +18,7 @@ Seriously though...
 
 ### Later Plans
 
+* GUI: Graphical User Interface using [Tauri](https://v2.tauri.app/)
 * Structured Data Output: Output results in defined, structured formats (schemas).
 * Anti-Bot Defenses: Implement rate limiting and proxy support for OpSec tooling.
 * Session Management: Add cookie and header control for authenticated scraping.
