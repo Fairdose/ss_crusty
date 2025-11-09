@@ -1,5 +1,5 @@
-//! [GitHub Repository](https://github.com/Fairdose/ss_crusty)
 //! ss_crusty (Simple Scraper) is a high-performance, command-line application written in **Rust** 🦀 designed to **fetch HTML content from a list of URLs in parallel and extract all absolute links**.
+//! [GitHub Repo](https://github.com/Fairdose/ss_crusty)
 //!
 //! ### Core Functionality
 //!
