@@ -1,21 +1,50 @@
-MIT License
+Copyright (c) 2025 Fairdose®
+All rights reserved.
 
-Copyright (c) 2025 fairdose.net
+Software: SS_Crusty
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+of this software and associated documentation files (the “Software”), to use,
+copy, modify, merge, publish, and distribute the Software **for strictly personal, academic, and non-revenue-generating purposes only** (referred to as "Non-Commercial Use"), subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. DEFINITION AND PROHIBITION OF COMMERCIAL USE:
+    Commercial use of the Software, in whole or in part, is strictly prohibited. “Commercial Use” includes, but is not limited to, any use that is primarily intended for, or directed toward, commercial advantage or monetary compensation. Specifically, this includes:
+    * **Selling or Sublicensing:** Offering the Software or derivative works as part of a paid product or service, or distributing it to generate revenue.
+    * **Internal Business Operations:** Using the Software within a company or organization for business operations, processing internal or external data, or for the development of any product or service intended for sale or commercial use.
+    * **Advertising & Sponsorship:** Using the Software in connection with advertising, paid promotions, or corporate sponsorship.
+    * **Fee-Based Consulting:** Using the Software in the delivery of professional or consulting services for which a fee is charged.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+2. TRADEMARK:
+    The name, logo, and brand identity “Fairdose” are trademarks of Fairdose®, registered and protected under the laws of the Republic of Türkiye. No right, title, or interest in the Fairdose® trademark is granted under this License.
+
+3. NOTICES:
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+4. WARRANTY DISCLAIMER:
+    The Software is provided “AS IS”, without warranty of any kind, express or implied,
+    including but not limited to the warranties of merchantability, fitness for a
+    particular purpose, and non-infringement. In no event shall the authors or
+    copyright holders be liable for any claim, damages, or other liability, whether
+    in an action of contract, tort, or otherwise, arising from, out of, or in
+    connection with the Software or the use or other dealings in the Software.
+
+5. COMPLIANCE:
+    Users of this Software are solely responsible for ensuring that their use of
+    the Software complies with all applicable laws and regulations in their country
+    or jurisdiction. The author and copyright holder shall bear no responsibility
+    for any misuse, violation, or unlawful activity conducted using this Software.
+
+6. GOVERNING LAW AND JURISDICTION:
+    This License shall be governed by and construed in accordance with the laws
+    of the Republic of Türkiye. Any disputes arising under or in connection with this License shall be subject to the **exclusive jurisdiction of the courts located in İstanbul, Türkiye.**
+
+7. ACCEPTANCE:
+    By using, copying, or distributing the Software, you acknowledge that you have
+    read, understood, and agree to be bound by the terms of this License.
+
+8. COMMERCIAL LICENSE:
+    The copyright holder reserves the sole right to grant commercial licenses to individuals or organizations. **Permission for any Commercial Use (as defined in Condition 1) must be secured via a separate, explicit, written commercial license** from the copyright holder. Interested parties should contact Fairdose at: legal@fairdose.dev
+
+------------------------------------------------------------
+SPDX-License-Identifier: LicenseRef-Fairdose-NC
