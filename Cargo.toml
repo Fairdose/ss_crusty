@@ -2,6 +2,10 @@
 name = "ss_crusty"
 version = "0.2.1"
 edition = "2024"
+authors = ["Batur Akçura fairdose.dev@gmail.com"]
+repository = "https://github.com/Fairdose/ss_crusty"
+homepage = "https://ss-crusty.fairdose.net/"
+documentation = "https://ss-crusty.fairdose.net/"
 
 [dependencies]
 parsers = { path = "./parsers" }
