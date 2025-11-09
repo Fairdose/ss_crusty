@@ -223,4 +223,4 @@ The core logic is handled by the scrape module:
 
 ### ⚖️ License
 
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE)
+This project is licensed under the **Fairdose Non-Commercial License**. See the [LICENSE](LICENSE) file for full details and commercial restrictions.
